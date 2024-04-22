@@ -38,8 +38,10 @@ function updateRemainingTimeDisplay() {
     if (alarm) {
       const now = Date.now();
       const alarmTime = alarm.scheduledTime;
-      const remainingTime = Math.floor((alarmTime - now) / 1000 / 60); // Convert to minutes
-      remainingTimeDisplay.textContent = `Next break in: ${remainingTime} minutes`;
+      const remainingTime = (alarmTime - now) / 1000;
+      const remainingMins = Math.floor(remainingTime / 60);
+      const remainingSeconds = Math.round(remainingTime % 60);
+      remainingTimeDisplay.textContent = `Next break in: ${remainingMins} minutes ${remainingSeconds} seconds`;
     } else {
       remainingTimeDisplay.textContent = "No break reminder set.";
     }
