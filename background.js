@@ -1,6 +1,6 @@
 // Load user preferences from storage (default values if not set)
 const storage = chrome.storage.local;
-let breakInterval = 1; // Minutes
+let breakInterval = 30; // Minutes
 let notificationSound = true;
 
 storage.get(["breakInterval", "notificationSound"], (data) => {
@@ -48,12 +48,17 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
   }
 });
 
-// Removed the line: chrome.idle.getState((idleState) => { ... });
-
 let lastActiveTime = performance.now();
 
 // Functionality to handle user preferences in the popup (optional)
-// ... (code to handle interaction with UI elements in popup.html)
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'updateBreakInterval') {
+    const newInterval = message.newInterval;
+    chrome.alarms.clear("breakReminder");
+    chrome.alarms.create("breakReminder", { periodInMinutes: Number(newInterval) });
+    sendResponse({ success: true }); 
+  }
+});
 
 // Persist user preferences to storage when they change (optional)
 // ... (code to save user settings to storage)

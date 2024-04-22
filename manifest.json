@@ -8,7 +8,8 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "scripts": ["popup.js"]
   },
   "icons": {
     "16": "images/icon-16.png",

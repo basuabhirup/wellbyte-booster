@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Wellbyte Booster</title>
-  <link rel="stylesheet" href="popup.css">  </head>
+    <meta charset="UTF-8">
+    <title>Wellbyte Booster</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
 <body>
-  <h1>Wellbyte Booster</h1>
-  <div id="message-container">
-    <p id="message"></p>
-    <span id="time-left"></span>
-  </div>
-  <button id="close-button">Close</button>
-  <script src="background.js"></script>
+    <h1>Wellbyte Booster</h1>
+    <div id="break-interval-container">
+      <label for="break-interval-slider">Break Interval:</label>
+      <input type="range" min="1" max="60" value="30" id="break-interval-slider">
+      <span id="break-interval-display">30 minutes</span>
+    </div>
+    <p id="remaining-time-display"></p>  <script src="popup.js"></script>
 </body>
 </html>

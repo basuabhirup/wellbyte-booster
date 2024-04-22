@@ -1,0 +1,25 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    margin: auto;
+  }
+  
+  h1 {
+    margin-bottom: 10px;
+  }
+  
+  #break-interval-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  #break-interval-slider {
+    width: 150px;
+  }
+  
+  #break-interval-display {
+    margin-left: 10px;
+  }
+  
