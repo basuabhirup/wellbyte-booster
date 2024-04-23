@@ -1,5 +1,6 @@
 const storage = chrome.storage.local;
 let breakInterval;
+let notificationSound = true;
 
 // Load user preferences from storage (default values if not set)
 storage.get("breakInterval", (data) => {
@@ -12,7 +13,9 @@ storage.get("breakInterval", (data) => {
       console.log("Default break interval set to 30 minutes");
     });
   }
-  chrome.alarms.create("breakReminder", { periodInMinutes: breakInterval });
+  chrome.alarms.create("breakReminder", {
+    periodInMinutes: Number(breakInterval),
+  });
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
@@ -57,20 +60,10 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     // Re-create the alarm with the stored break interval
     storage.get("breakInterval", (data) => {
       if (data.breakInterval) {
-        chrome.alarms.clear("breakReminder", (error) => {
-          if (error) {
-            console.error("Error clearing alarm:", error.message);
-          }
+        chrome.alarms.clear("breakReminder");
+        chrome.alarms.create("breakReminder", {
+          periodInMinutes: Number(data.breakInterval),
         });
-        chrome.alarms.create(
-          "breakReminder",
-          { periodInMinutes: data.breakInterval },
-          (createError) => {
-            if (createError) {
-              console.error("Error creating alarm:", createError.message);
-            }
-          }
-        );
       } else {
         console.error("Error retrieving break interval from storage.");
       }
@@ -92,20 +85,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "updateBreakInterval") {
     const newInterval = Number(message.newInterval); // Ensure numeric conversion
     if (!isNaN(newInterval) && newInterval > 0) {
-      chrome.alarms.clear("breakReminder", (error) => {
-        if (error) {
-          console.error("Error clearing alarm:", error.message);
-        }
+      chrome.alarms.clear("breakReminder");
+      chrome.alarms.create("breakReminder", {
+        periodInMinutes: newInterval,
       });
-      chrome.alarms.create(
-        "breakReminder",
-        { periodInMinutes: newInterval },
-        (createError) => {
-          if (createError) {
-            console.error("Error creating alarm:", createError.message);
-          }
-        }
-      );
       sendResponse({ success: true });
     } else {
       console.error("Invalid break interval received:", message.newInterval);
