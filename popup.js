@@ -1,6 +1,6 @@
 const breakIntervalSlider = document.getElementById("break-interval-slider");
 const breakIntervalDisplay = document.getElementById("break-interval-display");
-const remainingTimeDisplay = document.getElementById("remaining-time-display"); // New element
+const remainingTimeDisplay = document.getElementById("remaining-time-display");
 
 breakIntervalSlider.addEventListener("input", function () {
   const newInterval = breakIntervalSlider.value;
@@ -18,7 +18,8 @@ breakIntervalSlider.addEventListener("input", function () {
           console.log("Break interval updated successfully!");
           remainingTimeDisplay.textContent = `Next break in: ${newInterval} minutes`;
         } else {
-          console.error("Error updating break interval."); // Handle potential errors
+          console.error("Error updating break interval.");
+          console.error(response.error);
         }
       }
     );
@@ -31,7 +32,6 @@ chrome.storage.local.get("breakInterval", (data) => {
     breakIntervalDisplay.textContent = `${data.breakInterval} minutes`;
   }
 });
-
 
 function updateRemainingTimeDisplay() {
   chrome.alarms.get("breakReminder", (alarm) => {
