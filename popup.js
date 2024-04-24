@@ -2,12 +2,13 @@ const breakIntervalSlider = document.getElementById("break-interval-slider");
 const breakIntervalDisplay = document.getElementById("break-interval-display");
 const remainingTimeDisplay = document.getElementById("remaining-time-display");
 const notificationSoundSwitch = document.getElementById("notificationSound");
+const notificationSwitchText = document.getElementById("switch-text");
 
 breakIntervalSlider.addEventListener("input", function () {
   const newInterval = breakIntervalSlider.value;
   breakIntervalDisplay.textContent = `${newInterval} minutes`;
   chrome.storage.local.set({ breakInterval: newInterval }, () => {
-    // (Optional) Send message to background script
+    // Send message to background script
     chrome.runtime.sendMessage(
       {
         action: "updateBreakInterval",
@@ -34,6 +35,28 @@ chrome.storage.local.get("breakInterval", (data) => {
   }
 });
 
+chrome.storage.local.get("notificationSound", (data) => {
+  if (data.notificationSound == "off") {
+    notificationSoundSwitch.checked = false;
+    notificationSwitchText.textContent = "OFF";
+  } else if (data.notificationSound == "on") {
+    notificationSoundSwitch.checked = true;
+    notificationSwitchText.textContent = "ON";
+  }
+});
+
+notificationSoundSwitch.addEventListener("change", function (e) {
+  if (e.target.checked === false) {
+    chrome.storage.local.set({ notificationSound: "off" }, () => {
+      notificationSwitchText.textContent = "OFF";
+    });
+  } else {
+    chrome.storage.local.set({ notificationSound: "on" }, () => {
+      notificationSwitchText.textContent = "ON";
+    });
+  }
+});
+
 function updateRemainingTimeDisplay() {
   chrome.alarms.get("breakReminder", (alarm) => {
     if (alarm) {
@@ -48,13 +71,5 @@ function updateRemainingTimeDisplay() {
     }
   });
 }
-
-notificationSoundSwitch.addEventListener("change", function (e) {
-  if (e.target.checked === false) {
-    document.getElementById("switch-text").textContent = "OFF";
-  } else {
-    document.getElementById("switch-text").textContent = "ON";
-  }
-});
 
 updateRemainingTimeDisplay(); // Call on initial load to display initial time

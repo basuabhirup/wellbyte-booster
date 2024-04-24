@@ -1,6 +1,6 @@
 const storage = chrome.storage.local;
 let breakInterval;
-let notificationSound = true;
+let notificationSound;
 
 // Load user preferences from storage (default values if not set)
 storage.get("breakInterval", (data) => {
@@ -37,18 +37,49 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
       iconUrl: "images/icon.jpeg",
       title: "Wellbyte Booster",
       message: `Take a moment to relax and ${randomSuggestion}`,
+      priority: 2,
+      requireInteraction: true,
     };
 
-    if (notificationSound) {
-      notificationOptions.iconUrl = "images/icon.jpeg"; // Can set a specific notification icon here
-      notificationOptions.type = "basic"; // Needed for sound with basic type
+    storage.get("notificationSound", (data) => {
+      if (data.notificationSound) {
+        notificationSound = data.notificationSound;
+      } else {
+        // Set a default value if notificationSound is missing from storage
+        notificationSound = "on";
+        storage.set({ notificationSound }, () => {
+          console.log("Default notification sound set on");
+        });
+      }
+    });
+
+    if (notificationSound === "off") {
+      notificationOptions.silent = true;
+      notificationOptions.priority = 0;
+    } else if (notificationSound == "on") {
+      notificationOptions.silent = false;
+      notificationOptions.priority = 2;
+      chrome.runtime.sendMessage(
+        {
+          action: "playNotificationAudio",
+        },
+        (response) => {
+          // Add callback function to receive response
+          if (response && response.success) {
+            console.log("Notification sound played successfully!");
+          } else {
+            console.error("Error playing notification sound.");
+            console.error(response.error);
+          }
+        }
+      );
     }
 
     chrome.notifications.create(
       "breakNotification",
       notificationOptions,
       (notificationId) => {
-        if (chrome.runtime.lastError) {
+        if (notificationId.length < 1) {
           console.error(
             "Error creating notification:",
             chrome.runtime.lastError.message
