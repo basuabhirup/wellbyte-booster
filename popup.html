@@ -8,18 +8,20 @@
 </head>
 <body>
   <div class="container">
-    <h4>Wellbyte Booster</h4>
+    <h4 class="title">Wellbyte Booster</h4>
     <div class="form-group">
-      <label for="breakInterval">Break Interval (minutes):</label>
+      <label for="breakInterval" class="label">Break Interval: </label>
       <input type="range" id="break-interval-slider" min="1" max="60" value="30">
       <span id="break-interval-display">30 minutes</span>
     </div>
-    <div class="form-group">
-      <label for="notificationSound">Notification Sound:</label>
-      <div class="toggle-container">
-        <input type="checkbox" id="notificationSound" name="notificationSound" checked>
-        <span class="toggle-switch"></span>
-        <span class="toggle-label">On</span>
+    <div class="form-group">      
+      <div class="switch-box">
+        <p class="label sound">Notification Sound: </p>
+        <label for="notificationSound" class="switch">
+          <input type="checkbox" id="notificationSound" checked>
+          <span class="slider"></span>  
+        </label>   
+        <span id="switch-text">ON</span> 
       </div>
     </div>
     <div class="form-group">
@@ -30,3 +32,4 @@
   <script src="popup.js"></script>
 </body>
 </html>
+ 

@@ -1,6 +1,7 @@
 const breakIntervalSlider = document.getElementById("break-interval-slider");
 const breakIntervalDisplay = document.getElementById("break-interval-display");
 const remainingTimeDisplay = document.getElementById("remaining-time-display");
+const notificationSoundSwitch = document.getElementById("notificationSound");
 
 breakIntervalSlider.addEventListener("input", function () {
   const newInterval = breakIntervalSlider.value;
@@ -47,5 +48,13 @@ function updateRemainingTimeDisplay() {
     }
   });
 }
+
+notificationSoundSwitch.addEventListener("change", function (e) {
+  if (e.target.checked === false) {
+    document.getElementById("switch-text").textContent = "OFF";
+  } else {
+    document.getElementById("switch-text").textContent = "ON";
+  }
+});
 
 updateRemainingTimeDisplay(); // Call on initial load to display initial time
