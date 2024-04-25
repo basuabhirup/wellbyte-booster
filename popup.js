@@ -70,17 +70,19 @@ function updateRemainingTimeDisplay() {
       const remainingTime = (alarmTime - now) / 1000;
       const remainingMins = Math.floor(remainingTime / 60);
       const remainingSeconds = Math.round(remainingTime % 60);
-      remainingTimeDisplay.textContent = `Next break in: ${
-        remainingMins > 1
-          ? remainingMins + " minutes"
-          : remainingMins === 1
-          ? remainingMins + " minute"
-          : ""
-      } ${
-        remainingSeconds === 1
-          ? remainingSeconds + " second"
-          : remainingSeconds + " seconds"
-      }`;
+      if (remainingTime > 0) {
+        remainingTimeDisplay.textContent = `Next break in: ${
+          remainingMins > 1
+            ? remainingMins + " minutes"
+            : remainingMins === 1
+            ? remainingMins + " minute"
+            : ""
+        } ${
+          remainingSeconds === 1
+            ? remainingSeconds + " second"
+            : remainingSeconds + " seconds"
+        }`;
+      }
     } else {
       remainingTimeDisplay.textContent = "No break reminder set.";
     }
