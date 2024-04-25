@@ -7,7 +7,10 @@
     "alarms",
     "notifications",
     "storage",
-    "idle"
+    "idle",
+    "tabs",
+    "activeTab",
+    "scripting"
   ],
   "background": {
     "service_worker": "background.js"
@@ -34,10 +37,17 @@
       ]
     }
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "web_accessible_resources": [
     {
-      "resources": [ "audio/level-up.mp3" ],
-      "matches": [ "<all_urls>" ]
+      "resources": [
+        "audio/level-up.mp3"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

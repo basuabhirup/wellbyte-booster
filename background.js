@@ -4,7 +4,7 @@ let notificationSound;
 
 // Load user preferences from storage (default values if not set)
 storage.get("breakInterval", (data) => {
-  if (data.breakInterval) {
+  if (!!data && data.breakInterval) {
     breakInterval = data.breakInterval;
   } else {
     // Set a default value if breakInterval is missing from storage
@@ -42,6 +42,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     };
 
     storage.get("notificationSound", (data) => {
+      console.log(data);
       if (data.notificationSound) {
         notificationSound = data.notificationSound;
       } else {
@@ -51,29 +52,46 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
           console.log("Default notification sound set on");
         });
       }
-    });
 
-    if (notificationSound === "off") {
-      notificationOptions.silent = true;
-      notificationOptions.priority = 0;
-    } else if (notificationSound == "on") {
-      notificationOptions.silent = false;
-      notificationOptions.priority = 2;
-      chrome.runtime.sendMessage(
-        {
-          action: "playNotificationAudio",
-        },
-        (response) => {
-          // Add callback function to receive response
-          if (response && response.success) {
-            console.log("Notification sound played successfully!");
-          } else {
-            console.error("Error playing notification sound.");
-            console.error(response.error);
+      if (data.notificationSound === "off") {
+        notificationOptions.silent = true;
+        notificationOptions.priority = 0;
+      } else if (data.notificationSound == "on") {
+        notificationOptions.silent = false;
+        notificationOptions.priority = 2;
+
+        (async () => {
+          let [tab] = await chrome.tabs.query({
+            active: true,
+            lastFocusedWindow: true,
+          });
+          if (!tab) {
+            [tab] = await chrome.tabs.query({
+              index: 0,
+            });
           }
-        }
-      );
-    }
+          if (tab.url?.startsWith("chrome://")) {
+            [tab] = await chrome.tabs.query({
+              index: 1,
+            });
+          }
+          console.log(tab);
+          chrome.scripting
+            .executeScript({
+              target: { tabId: tab.id },
+              files: ["script.js"],
+            })
+            .then(() => {
+              console.log(
+                "Script executed & notification played successfully!"
+              );
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })();
+      }
+    });
 
     chrome.notifications.create(
       "breakNotification",
