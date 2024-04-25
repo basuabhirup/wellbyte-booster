@@ -34,7 +34,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 
     const notificationOptions = {
       type: "basic",
-      iconUrl: "images/icon.jpeg",
+      iconUrl: "images/icon.png",
       title: "Wellbyte Booster",
       message: `Take a moment to relax and ${randomSuggestion}`,
       priority: 2,

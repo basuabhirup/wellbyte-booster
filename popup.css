@@ -1,7 +1,18 @@
 body {
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
   margin: 0;
   padding: 5px;
+}
+
+img {
+  text-align: center;
+  margin: auto;
+  display: block;
+  height: 60px;
+  width: 60px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 #break-interval-slider {
@@ -15,19 +26,24 @@ body {
   text-align: end;
 }
 
+#remaining-time-display {
+  text-align: center;
+  margin: auto;
+}
+
 .container {
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px;
+  padding: 5px 15px;
   width: 200px;
 }
 
 .title {
   text-align: center;
-  font-weight: bolder;
-  font-size: large;
-  margin-top: 8px;
-  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: medium;
+  margin-top: 0;
+  margin-bottom: 24px;
 }
 
 /* --------------------- */
