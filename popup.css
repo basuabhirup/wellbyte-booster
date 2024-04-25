@@ -26,7 +26,7 @@ img {
   text-align: end;
 }
 
-#remaining-time-display {
+#remaining-time-display, #footer {
   text-align: center;
   margin: auto;
 }
@@ -131,4 +131,17 @@ input:checked + .slider:before {
 #switch-text {
   margin-top: 12px;
   margin-left: 2px;
+}
+
+#footer {
+  font-size: smaller;
+  margin-top: 24px;
+}
+
+#footer > a {
+  text-decoration: none;
+}
+
+#footer > a:hover {
+  color: blueviolet;
 }

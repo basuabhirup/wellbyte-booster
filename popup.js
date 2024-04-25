@@ -3,6 +3,7 @@ const breakIntervalDisplay = document.getElementById("break-interval-display");
 const remainingTimeDisplay = document.getElementById("remaining-time-display");
 const notificationSoundSwitch = document.getElementById("notificationSound");
 const notificationSwitchText = document.getElementById("switch-text");
+const currentYear = document.getElementById("current-year");
 let timerIntervalId;
 
 breakIntervalSlider.addEventListener("input", function () {
@@ -90,6 +91,8 @@ function updateRemainingTimeDisplay() {
 }
 
 updateRemainingTimeDisplay(); // Call on initial load to display initial time
+
+currentYear.textContent = new Date().getFullYear();
 
 timerIntervalId = window.setInterval(() => {
   updateRemainingTimeDisplay();
