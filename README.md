@@ -2,6 +2,9 @@
 
 #### Video Demo: <URL HERE>
 
+![Screenshot from 2024-04-25 23-14-37](https://github.com/basuabhirup/wellbyte-booster/assets/69730155/06fa8793-c957-4e33-be03-7e027ed7dadd)
+
+
 **What is Wellbyte Booster?**
 
 Wellbyte Booster is a Chrome extension designed to help you manage your well-being by encouraging you to take regular breaks throughout your workday. It provides gentle reminders to step away from your screen and offers suggestions for quick activities to help you refresh and refocus.
