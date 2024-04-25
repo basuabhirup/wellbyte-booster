@@ -2,7 +2,10 @@
 
 #### Video Demo: <URL HERE>
 
-![Screenshot from 2024-04-25 23-14-37](https://github.com/basuabhirup/wellbyte-booster/assets/69730155/06fa8793-c957-4e33-be03-7e027ed7dadd)
+#### Screenshot:
+
+![image](https://github.com/basuabhirup/wellbyte-booster/assets/69730155/149bb6de-495c-4037-a099-3baaeddfc2e6)
+
 
 
 **What is Wellbyte Booster?**
